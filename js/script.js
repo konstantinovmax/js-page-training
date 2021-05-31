@@ -24,3 +24,26 @@ const movieDB = {
     ]
 };
 
+const promoAdv = document.querySelectorAll('.promo__adv img');
+const filmGenre = document.querySelector('.promo__genre');
+const promoBackground = document.querySelector('.promo__bg');
+const filmItems = document.querySelector('.promo__interactive-list');
+
+promoAdv.forEach((item) => {
+    item.remove();
+});
+
+filmGenre.textContent = 'драма';
+promoBackground.style.cssText = 'background: url(../img/bg.jpg) center center/cover no-repeat';
+
+filmItems.innerHTML = '';
+
+movieDB.movies.sort();
+
+movieDB.movies.forEach((item, i) => {
+    filmItems.innerHTML += `
+        <li class="promo__interactive-item">${i + 1}. ${item}
+            <div class="delete"></div>
+        </li>
+    `;
+});
