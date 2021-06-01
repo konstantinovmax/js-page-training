@@ -30,6 +30,7 @@ const promoBackground = document.querySelector('.promo__bg');
 const filmItems = document.querySelector('.promo__interactive-list');
 const form = document.querySelector('.add');
 const formInput = form.querySelector('.adding__input');
+const checkboxForm = form.querySelector('.checkbox-form');
 const submitButton = form.querySelector('.submit-button');
 
 function deleteAdv(promos) {
@@ -49,7 +50,7 @@ function sortArr(arr) {
 
 function renderMovie(films, parent) {
     parent.innerHTML = '';
-
+    sortArr(films);
     films.forEach((item, i) => {
         parent.innerHTML += `
             <li class="promo__interactive-item">${i + 1}. ${item}
@@ -64,7 +65,6 @@ function renderMovie(films, parent) {
             button.parentElement.remove();
             movieDB.movies.splice(i, 1);
             renderMovie(films, parent);
-            sortArr(movieDB.movies);
         });
     });
 }
@@ -73,10 +73,15 @@ function submitFormHandler(evt) {
     evt.preventDefault();
 
     let newFilm = formInput.value;
+    const favorite = checkboxForm.checked;
 
     if (newFilm) {
         if (newFilm.length > 21) {
             newFilm = `${newFilm.substring(0, 22)}...`;
+        }
+
+        if (favorite) {
+            console.log('Добавляем ваш любимый фильм');
         }
 
         movieDB.movies.push(newFilm);
@@ -89,6 +94,5 @@ function submitFormHandler(evt) {
 
 deleteAdv(promoAdv);
 makeChanges();
-sortArr(movieDB.movies);
 renderMovie(movieDB.movies, filmItems);
 form.addEventListener('submit', submitFormHandler);
